@@ -5,6 +5,8 @@
 typedef struct DataType {
 	/*定义一种数据类型*/
 };
+int operator == (const DataType& A,const DataType& B) {}/*定义对DataType的运算*/
+
 DataType data[MAXSIZE];
 
 typedef struct node {
