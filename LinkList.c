@@ -98,3 +98,48 @@ LinkList Locate_LinkList_Value(LinkList Head, DataType x)
 	}
 	return p;
 }
+
+int Insert_LinkList(LinkList Head, int i, DataType x)
+{/*功能：在单链表的第i个位置后插入一个带有数据x的节点
+入口参数：头节点，节点位置i，数据x
+返回标志：返回0表示不成功，返回1表示成功*/
+	LinkList p = NULL;
+	p = Locate_LinkList_Position(Head,i);		/*找到第i个节点的地址*/
+	if(!p) return 0;					/*如果p的位置不合法，返回0*/
+	
+	LinkList q;
+	q = (LinkList) malloc(sizeof(LinkNode));
+
+	if(!q) return 0;					/*如果申请内存失败，返回0*/
+
+	q->data = x;
+	q->next = p->next;
+	p->next = q;
+	return 1;							/*插入成功*/
+}
+
+int Delete_LinkList(LinkList Head,int i)
+{/*功能：删除第i个节点
+入口参数：头节点，节点位置i
+返回标志：返回0表示不成功，返回1表示成功*/
+
+	if(Head == NULL||Head->next == NULL) return 0;		/*如果头节点为空或者指向空，返回0*/
+	if(i<=0||i>Length_LinkList) return 0;		/*如果i不合法，返回0*/
+
+	if(i == 1)						/*如果i=1，删除第一个节点*/
+	{
+		LinkList p;
+		p = Head->next;
+		Head = p->next;
+		free(p);
+		return 1;
+	}
+
+	LinkList p;
+	p = Locate_LinkList_Position(Head,i-1);			/*找到第i-1个位置的地址*/
+
+	LinkList q = p->next;
+	p->next = q->next;
+	free(q);
+	return 1;							/*删除成功*/
+}
